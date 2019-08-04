@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Wiadomości</title>
+	<style type="text/css">
+		body {
+			margin: 0;
+			/*font-size: 2em;*/
+			font-family: "Comic Sans MS";
+		}
+
+		.mainMessengerElement {
+			height: 100vh;
+			/* background-color: #1E1E1E; # the dark side */
+			background-color: #101010; /* MDN Dark */
+			/*background: #ccc;*/
+			display: flex;
+			flex-direction: row;
+			color: #CECECE;
+		}
+		.mainSection {
+			box-sizing: border-box;
+		}
+
+		.threadList {
+			/*background: #141;*/
+			flex: 1;
+			overflow: auto;
+			border-right: 1px solid #4e4e4e;
+			/* TODO: ładny scrollbar */
+		}
+		.threadContent {
+			flex: 3;
+			display: flex;
+			flex-direction: column;
+		}
+
+		.threadHeader {
+			background: #410;
+			padding: 20px;
+			border-bottom: 1px solid #363636;
+		}
+		.threadContent > section {
+			flex: 1;
+			display: flex;
+		}
+		.threadContent .messages {
+			/*background: #B55;*/
+			flex: 2;
+			padding: 0 .6em
+		}
+		.threadContent .info {
+			background: #B05;
+			flex: 1;
+		}
+
+
+		/* lista rozmow */
+		.threadList header {
+			padding: 20px;
+			/* TODO: stała wysokość, tak samo jak .threadHeader */
+			border-bottom: 1px solid #363636;
+		}
+		.profilePicture {
+/*			padding: 25px;
+			display: inline-block;
+			background-image: url(gfx/astronaut.svg);
+			background-position: center;
+			background-size: contain;*/
+			padding-right: 0.6em;
+		}
+
+		.threadList .listElement {
+			display: flex;
+			padding: 0 .6em;
+		}
+
+		.messagePreview {
+			flex: 1;
+			display: flex;
+			flex-direction: column;
+
+		}
+
+		/* sekcja z wiaomościami */
+		.chatMessage {
+			display: flex;
+		}
+		.ownMessage {
+			flex-direction: row-reverse;
+		}
+		.chatMessageContent {
+			background-color: #363636;
+			border-radius: 15px;
+			padding: 2px 8px;
+		}
+
+
+		/* profilowe */
+		img.smallThumbnail {
+			width: 28px;
+			height: 28px;
+		}
+
+		img.normalThumbnail {
+			width: 50px;
+			height: 50px;
+		}
+
+		/* rozne ogólne style */
+		ul {
+			list-style-type: none;
+			margin: 0;
+			padding: 0;
+		}
+	</style>
+</head>
+<body>
+	<div class="mainMessengerElement">
+		<nav class="threadList mainSection">
+			<header>Lista rozmów</header>
+			<ul>
+				<li class="listElement">
+					<section>
+						<div class="profilePicture">
+							<img class="normalThumbnail" src="gfx/astronaut.svg">
+						</div>
+					</section>
+					<section class="messagePreview">
+						<div class="messageSender">Jan Kowalski</div>
+						<div class="messageText">
+							<span class="">Ty: <span>HAHAHHAHAHAHA</span></span>
+						</div>
+					</section>
+					<section>
+						<time class="timestamp" title="Dziś" data-utime="1564852492.264">19:14</time>
+					</section>
+				</li>
+				<li class="listElement">
+					<section>
+						<div class="profilePicture">
+							<img class="normalThumbnail" src="gfx/astronaut.svg">
+						</div>
+					</section>
+					<section class="messagePreview">
+						<div class="messageSender">Jan Kowalski</div>
+						<div class="messageText">
+							<span class="">Ty: <span>HAHAHHAHAHAHA</span></span>
+						</div>
+					</section>
+					<section>
+						<time class="timestamp" title="Dziś" data-utime="1564852492.264">19:14</time>
+					</section>
+				</li>
+				<li class="listElement">
+					<section>
+						<div class="profilePicture">
+							<img class="normalThumbnail" src="gfx/astronaut.svg">
+						</div>
+					</section>
+					<section class="messagePreview">
+						<div class="messageSender">Jan Kowalski</div>
+						<div class="messageText">
+							<span class="">Ty: <span>HAHAHHAHAHAHA</span></span>
+						</div>
+					</section>
+					<section>
+						<time class="timestamp" title="Dziś" data-utime="1564852492.264">19:14</time>
+					</section>
+				</li>
+				<li class="listElement">
+					<section>
+						<div class="profilePicture">
+							<img class="normalThumbnail" src="gfx/astronaut.svg">
+						</div>
+					</section>
+					<section class="messagePreview">
+						<div class="messageSender">Jan Kowalski</div>
+						<div class="messageText">
+							<span class="">Ty: <span>HAHAHHAHAHAHA</span></span>
+						</div>
+					</section>
+					<section>
+						<time class="timestamp" title="Dziś" data-utime="1564852492.264">19:14</time>
+					</section>
+				</li>
+				<li class="listElement">
+					<section>
+						<div class="profilePicture">
+							<img class="normalThumbnail" src="gfx/astronaut.svg">
+						</div>
+					</section>
+					<section class="messagePreview">
+						<div class="messageSender">Jan Kowalski</div>
+						<div class="messageText">
+							<span class="">Ty: <span>HAHAHHAHAHAHA</span></span>
+						</div>
+					</section>
+					<section>
+						<time class="timestamp" title="Dziś" data-utime="1564852492.264">19:14</time>
+					</section>
+				</li>
+				<li class="listElement">
+					<section>
+						<div class="profilePicture">
+							<img class="normalThumbnail" src="gfx/astronaut.svg">
+						</div>
+					</section>
+					<section class="messagePreview">
+						<div class="messageSender">Jan Kowalski</div>
+						<div class="messageText">
+							<span class="">Ty: <span>HAHAHHAHAHAHA</span></span>
+						</div>
+					</section>
+					<section>
+						<time class="timestamp" title="Dziś" data-utime="1564852492.264">19:14</time>
+					</section>
+				</li>
+				<li class="listElement">
+					<section>
+						<div class="profilePicture">
+							<img class="normalThumbnail" src="gfx/astronaut.svg">
+						</div>
+					</section>
+					<section class="messagePreview">
+						<div class="messageSender">Jan Kowalski</div>
+						<div class="messageText">
+							<span class="">Ty: <span>HAHAHHAHAHAHA</span></span>
+						</div>
+					</section>
+					<section>
+						<time class="timestamp" title="Dziś" data-utime="1564852492.264">19:14</time>
+					</section>
+				</li>
+			</ul>
+		</nav>
+		<div class="threadContent mainSection">
+			<header class="threadHeader">Nazwa rozmowy</header>
+			<section>
+				<div class="messages mainSection">
+					<div class="chatMessage ownMessage">
+						<img class="smallThumbnail" src="gfx/astronaut.svg">
+						<div class="chatMessageContent">Hej 1</div>
+					</div>
+					<div class="chatMessage alienMessage">
+						<img class="smallThumbnail" src="gfx/astronaut.svg">
+						<div class="chatMessageContent">Hej 2</div>
+					</div>
+					<div class="chatMessage ownMessage">
+						<img class="smallThumbnail" src="gfx/astronaut.svg">
+						<div class="chatMessageContent">Hej 3</div>
+					</div>
+					<div class="chatMessage alienMessage">
+						<img class="smallThumbnail" src="gfx/astronaut.svg">
+						<div class="chatMessageContent">Hej 4</div>
+					</div>
+					<div class="chatMessage ownMessage">
+						<img class="smallThumbnail" src="gfx/astronaut.svg">
+						<div class="chatMessageContent">Hej 5</div>
+					</div>
+					<div class="chatMessage alienMessage">
+						<img class="smallThumbnail" src="gfx/astronaut.svg">
+						<div class="chatMessageContent">Hej 6</div>
+					</div>
+				</div>
+				<div class="info mainSection">Informacje o rozmowie</div>
+			</section>
+		</div>
+	</div>
+</body>
+</html>
