@@ -62,25 +62,18 @@
 			/* TODO: stała wysokość, tak samo jak .threadHeader */
 			border-bottom: 1px solid #363636;
 		}
-		.profilePicture {
-/*			padding: 25px;
-			display: inline-block;
-			background-image: url(gfx/astronaut.svg);
-			background-position: center;
-			background-size: contain;*/
-			padding-right: 0.6em;
-		}
+/*							.profilePicture {
+								padding-right: 0.6em;
+							}*/
 
-		.threadList .listElement {
-			display: flex;
-			padding: 0 .6em;
-		}
-
-		.messagePreview {
-			flex: 1;
+		.threadList > nav {
 			display: flex;
 			flex-direction: column;
+			padding-top: 0.6em;
+		}
 
+		.threadList thread-list-element {
+			padding: .3em .6em;
 		}
 
 		/* sekcja z wiaomościami */
@@ -102,139 +95,31 @@
 			width: 28px;
 			height: 28px;
 		}
-
+/*
 		img.normalThumbnail {
 			width: 50px;
 			height: 50px;
-		}
+		}*/
 
 		/* rozne ogólne style */
-		ul {
+/*		ul {
 			list-style-type: none;
 			margin: 0;
 			padding: 0;
-		}
+		}*/
 	</style>
 </head>
 <body>
 	<div class="mainMessengerElement">
-		<nav class="threadList mainSection">
+		<section class="threadList mainSection">
 			<header>Lista rozmów</header>
-			<ul>
-				<li class="listElement">
-					<section>
-						<div class="profilePicture">
-							<img class="normalThumbnail" src="gfx/astronaut.svg">
-						</div>
-					</section>
-					<section class="messagePreview">
-						<div class="messageSender">Jan Kowalski</div>
-						<div class="messageText">
-							<span class="">Ty: <span>HAHAHHAHAHAHA</span></span>
-						</div>
-					</section>
-					<section>
-						<time class="timestamp" title="Dziś" data-utime="1564852492.264">19:14</time>
-					</section>
-				</li>
-				<li class="listElement">
-					<section>
-						<div class="profilePicture">
-							<img class="normalThumbnail" src="gfx/astronaut.svg">
-						</div>
-					</section>
-					<section class="messagePreview">
-						<div class="messageSender">Jan Kowalski</div>
-						<div class="messageText">
-							<span class="">Ty: <span>HAHAHHAHAHAHA</span></span>
-						</div>
-					</section>
-					<section>
-						<time class="timestamp" title="Dziś" data-utime="1564852492.264">19:14</time>
-					</section>
-				</li>
-				<li class="listElement">
-					<section>
-						<div class="profilePicture">
-							<img class="normalThumbnail" src="gfx/astronaut.svg">
-						</div>
-					</section>
-					<section class="messagePreview">
-						<div class="messageSender">Jan Kowalski</div>
-						<div class="messageText">
-							<span class="">Ty: <span>HAHAHHAHAHAHA</span></span>
-						</div>
-					</section>
-					<section>
-						<time class="timestamp" title="Dziś" data-utime="1564852492.264">19:14</time>
-					</section>
-				</li>
-				<li class="listElement">
-					<section>
-						<div class="profilePicture">
-							<img class="normalThumbnail" src="gfx/astronaut.svg">
-						</div>
-					</section>
-					<section class="messagePreview">
-						<div class="messageSender">Jan Kowalski</div>
-						<div class="messageText">
-							<span class="">Ty: <span>HAHAHHAHAHAHA</span></span>
-						</div>
-					</section>
-					<section>
-						<time class="timestamp" title="Dziś" data-utime="1564852492.264">19:14</time>
-					</section>
-				</li>
-				<li class="listElement">
-					<section>
-						<div class="profilePicture">
-							<img class="normalThumbnail" src="gfx/astronaut.svg">
-						</div>
-					</section>
-					<section class="messagePreview">
-						<div class="messageSender">Jan Kowalski</div>
-						<div class="messageText">
-							<span class="">Ty: <span>HAHAHHAHAHAHA</span></span>
-						</div>
-					</section>
-					<section>
-						<time class="timestamp" title="Dziś" data-utime="1564852492.264">19:14</time>
-					</section>
-				</li>
-				<li class="listElement">
-					<section>
-						<div class="profilePicture">
-							<img class="normalThumbnail" src="gfx/astronaut.svg">
-						</div>
-					</section>
-					<section class="messagePreview">
-						<div class="messageSender">Jan Kowalski</div>
-						<div class="messageText">
-							<span class="">Ty: <span>HAHAHHAHAHAHA</span></span>
-						</div>
-					</section>
-					<section>
-						<time class="timestamp" title="Dziś" data-utime="1564852492.264">19:14</time>
-					</section>
-				</li>
-				<li class="listElement">
-					<section>
-						<div class="profilePicture">
-							<img class="normalThumbnail" src="gfx/astronaut.svg">
-						</div>
-					</section>
-					<section class="messagePreview">
-						<div class="messageSender">Jan Kowalski</div>
-						<div class="messageText">
-							<span class="">Ty: <span>HAHAHHAHAHAHA</span></span>
-						</div>
-					</section>
-					<section>
-						<time class="timestamp" title="Dziś" data-utime="1564852492.264">19:14</time>
-					</section>
-				</li>
-			</ul>
-		</nav>
+			<nav>
+				<thread-list-element data='{"name":"Rafał Pokrywka","picture":"gfx/astronaut.svg","snippet":"Ty: lol xD", "utime":1564852492.264}'></thread-list-element>
+				<thread-list-element data='{"name":"Magda Szewczyk","picture":"gfx/astronaut.svg","snippet":"Hejka!", "utime":1564852492.264}'></thread-list-element>
+				<thread-list-element data='{"name":"Offchan","picture":"gfx/astronaut.svg","snippet":"Olech: chuj kurwa c++", "utime":1564852492.264}'></thread-list-element>
+				<thread-list-element data='{"name":"Jan Kowalski","picture":"gfx/astronaut.svg","snippet":"Ty: HAHAHHAHAHAHA", "utime":1564852492.264}'></thread-list-element>
+			</nav>
+		</section>
 		<div class="threadContent mainSection">
 			<header class="threadHeader">Nazwa rozmowy</header>
 			<section>
@@ -268,5 +153,6 @@
 			</section>
 		</div>
 	</div>
+	<script src="js/components/threadListElement.js"></script>
 </body>
 </html>
