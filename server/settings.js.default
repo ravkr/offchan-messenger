@@ -1,0 +1,10 @@
+
+module.exports = {
+    databaseCredentials: {
+        host: "",
+        user: "",
+        database: "",
+        password: ""
+    },
+    BCRYPT_ROUNDS: 14,
+};

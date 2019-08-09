@@ -11,6 +11,7 @@ registerForm.addEventListener("keydown", (e) => {
             // TODO: może jakieś ukryte pole w formularzu, jako zabezpieczenie
             login: registerForm.login.value,
             password: registerForm.password.value,
+            realName: registerForm.realName.value,
         };
         socket.send(JSON.stringify(obj));
         console.log("rejestracja", obj);

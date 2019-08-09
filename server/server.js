@@ -4,6 +4,7 @@ const path = require("path");
 const WebSocket = require("ws");
 const crypto = require("crypto");
 const Utils = require("./src/Utils.js");
+const UserManager = require("./src/UserManager.js");
 
 let server = http.createServer(function (request, response) {
 
@@ -43,7 +44,6 @@ let server = http.createServer(function (request, response) {
             } else {
                 response.writeHead(500);
                 response.end("Sorry, check with the site admin for error: " + error.code + " ..\n");
-                response.end();
             }
         } else {
             response.writeHead(200, {
@@ -55,7 +55,6 @@ let server = http.createServer(function (request, response) {
             response.end(content, "utf-8");
         }
     });
-
 });
 
 
@@ -81,12 +80,14 @@ wss.on("headers", function connection(headers, req) {
     }
 
     // TODO: na produkcji ma być dodatkowo "; Secure"
+    // TODO: czas trwania sesji do ustawień
     let cookie = `Set-Cookie: sid=${sessionID}; Max-Age=60; HttpOnly`;
     headers.push(cookie);
 });
 
 wss.on("connection", function connection(ws) {
     console.log((new Date()) + " Peer " + ws._socket.remoteAddress + " connected.");
+    // TODO: obsługa IP jeśli używamy reverse proxy
     // const ip = req.headers['x-forwarded-for'].split(/\s*,\s*/)[0];
 
     ws.on("message", function incoming(message) {
@@ -99,6 +100,16 @@ wss.on("connection", function connection(ws) {
             return;
         }
         console.log("onMessage:", json);
+
+        if (json.action === "register") {
+            UserManager.registerAccount(json.login, json.password, json.realName, ws._socket.remoteAddress).then((data)=> {
+                console.log("rejestracja:", data);
+            }).catch((err) => {
+                // TODO: obsługa błędów
+                console.log("ERROR!");
+                console.log(err);
+            });
+        }
 
     });
 

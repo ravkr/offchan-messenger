@@ -1,0 +1,19 @@
+{
+  "name": "offchan-messenger-server",
+  "version": "0.0.1",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "rav_kr",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.6",
+    "eslint": "^6.1.0",
+    "ipaddr.js": "^1.9.1",
+    "mysql2": "^1.6.5",
+    "ws": "^7.1.1"
+  }
+}
