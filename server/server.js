@@ -70,8 +70,8 @@ wss.broadcast = function broadcast(data) {
     });
 };
 
-wss.on("headers", function connection(headers, req) {
-    let oldCookies = Utils.parseCookie(req.headers["cookie"] || "");
+wss.on("headers", function connection(headers, request) {
+    let oldCookies = Utils.parseCookie(request.headers["cookie"] || "");
     let base64Regex = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;
 
     let sessionID;
@@ -86,9 +86,14 @@ wss.on("headers", function connection(headers, req) {
     // TODO: czas trwania sesji do ustawień
     let cookie = `Set-Cookie: sid=${sessionID}; Max-Age=60; HttpOnly`;
     headers.push(cookie);
+
+    request.userData = {
+        sessionID
+    };
 });
 
-wss.on("connection", function connection(ws) {
+wss.on("connection", function connection(ws, request) {
+    console.log("sessionID:", request.userData.sessionID);
     console.log((new Date()) + " Peer " + ws._socket.remoteAddress + " connected.");
     // TODO: obsługa IP jeśli używamy reverse proxy
     // const ip = req.headers['x-forwarded-for'].split(/\s*,\s*/)[0];
@@ -104,14 +109,23 @@ wss.on("connection", function connection(ws) {
         }
         console.log("onMessage:", json);
 
-        if (json.action === "register") {
-            UserManager.registerAccount(json.login, json.password, json.realName, ws._socket.remoteAddress).then((data)=> {
-                console.log("rejestracja:", data);
-            }).catch((err) => {
-                // TODO: obsługa błędów
-                console.log("ERROR!");
-                console.log(err);
-            });
+        switch (json.action) {
+            case "login":
+                UserManager.loginAccount(json.login, json.password, request.userData.sessionID, ws._socket.remoteAddress).then((data)=> {
+                    console.log("login:", data);
+                }).catch((err) => {
+                    // TODO: obsługa błędów
+                    console.log("login error!", err);
+                });
+                break;
+            case "register":
+                UserManager.registerAccount(json.login, json.password, json.realName, ws._socket.remoteAddress).then((data)=> {
+                    console.log("register:", data);
+                }).catch((err) => {
+                    // TODO: obsługa błędów
+                    console.log("register error!", err);
+                });
+                break;
         }
 
     });
