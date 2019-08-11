@@ -30,7 +30,7 @@
 			border-right: 1px solid #4e4e4e;
 			/* TODO: ładny scrollbar */
 		}
-		.threadContent {
+		.threadArea {
 			flex: 3;
 			display: flex;
 			flex-direction: column;
@@ -41,16 +41,23 @@
 			padding: 20px;
 			border-bottom: 1px solid #363636;
 		}
-		.threadContent > section {
+		.threadArea > section {
 			flex: 1;
 			display: flex;
 		}
-		.threadContent .messages {
+		.threadArea .threadContent {
 			/*background: #B55;*/
 			flex: 2;
+			/*height: 100%;*/
+			/* TODO: to jest januszerka; 64px to wysokość headera; trzeba tu będzie też odjąć wysokość pola do pisania */
+			height: calc(100vh - 64px);
+			overflow-y: scroll;
+		}
+		.threadArea .messages {
 			padding: 0 .6em
 		}
-		.threadContent .info {
+
+		.threadArea .info {
 			background: #B05;
 			flex: 1;
 		}
@@ -89,6 +96,12 @@
 			padding: 2px 8px;
 		}
 
+		.scrollableArea {
+
+			/*overscroll-behavior: contain;*/
+			/*overflow-y: scroll;*/
+		}
+
 
 		/* profilowe */
 		img.smallThumbnail {
@@ -107,6 +120,11 @@
 			margin: 0;
 			padding: 0;
 		}*/
+
+		.hideScrollBar {
+			margin-right: -30px;
+			padding-right: 30px;
+		}
 	</style>
 </head>
 <body>
@@ -120,34 +138,35 @@
 				<thread-list-element data='{"name":"Jan Kowalski","picture":"gfx/astronaut.svg","snippet":"Ty: HAHAHHAHAHAHA", "utime":1564852492.264}'></thread-list-element>
 			</nav>
 		</section>
-		<div class="threadContent mainSection">
+		<div class="threadArea mainSection">
 			<header class="threadHeader">Nazwa rozmowy</header>
 			<section>
-				<div class="messages mainSection">
-					<div class="chatMessage ownMessage">
-						<img class="smallThumbnail" src="gfx/astronaut.svg">
-						<div class="chatMessageContent">Hej 1</div>
-					</div>
-					<div class="chatMessage alienMessage">
-						<img class="smallThumbnail" src="gfx/astronaut.svg">
-						<div class="chatMessageContent">Hej 2</div>
-					</div>
-					<div class="chatMessage ownMessage">
-						<img class="smallThumbnail" src="gfx/astronaut.svg">
-						<div class="chatMessageContent">Hej 3</div>
-					</div>
-					<div class="chatMessage alienMessage">
-						<img class="smallThumbnail" src="gfx/astronaut.svg">
-						<div class="chatMessageContent">Hej 4</div>
-					</div>
-					<div class="chatMessage ownMessage">
-						<img class="smallThumbnail" src="gfx/astronaut.svg">
-						<div class="chatMessageContent">Hej 5</div>
-					</div>
-					<div class="chatMessage alienMessage">
-						<img class="smallThumbnail" src="gfx/astronaut.svg">
-						<div class="chatMessageContent">Hej 6</div>
-					</div>
+				<div class="threadContent">
+					<!-- <div class="messages scrollableArea"> -->
+						<!-- <div class="scrollableBody"> -->
+							<div class="chatMessage ownMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 1</div></div>
+							<div class="chatMessage alienMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 2</div></div>
+							<div class="chatMessage ownMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 3</div></div>
+							<div class="chatMessage alienMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 4</div></div>
+							<div class="chatMessage ownMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 5</div></div>
+							<div class="chatMessage alienMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 6</div></div>
+							<div class="chatMessage ownMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 1</div></div>
+							<div class="chatMessage alienMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 2</div></div>
+							<div class="chatMessage ownMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 3</div></div>
+							<div class="chatMessage alienMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 4</div></div>
+							<div class="chatMessage ownMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 5</div></div>
+							<div class="chatMessage alienMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 6</div></div>
+							<div class="chatMessage ownMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 1</div></div>
+							<div class="chatMessage alienMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 2</div></div>
+							<div class="chatMessage ownMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 3</div></div>
+							<div class="chatMessage alienMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 4</div></div>
+							<div class="chatMessage ownMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 5</div></div>
+							<div class="chatMessage alienMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 6</div></div>
+						<!-- </div> -->
+					<!-- </div> -->
+<!-- 					<div>
+						Tu będzie się pisało wiadomości
+					</div> -->
 				</div>
 				<div class="info mainSection">Informacje o rozmowie</div>
 			</section>
