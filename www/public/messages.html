@@ -4,6 +4,8 @@
 	<meta charset="utf-8">
 	<title>Wiadomości</title>
 	<style type="text/css">
+		/* TODO: ładny scrollbar */
+
 		body {
 			margin: 0;
 			/*font-size: 2em;*/
@@ -19,17 +21,17 @@
 			flex-direction: row;
 			color: #CECECE;
 		}
+
 		.mainSection {
 			box-sizing: border-box;
 		}
 
 		.threadList {
-			/*background: #141;*/
 			flex: 1;
 			overflow: auto;
 			border-right: 1px solid #4e4e4e;
-			/* TODO: ładny scrollbar */
 		}
+
 		.threadArea {
 			flex: 3;
 			display: flex;
@@ -46,15 +48,19 @@
 			display: flex;
 		}
 		.threadArea .threadContent {
-			/*background: #B55;*/
 			flex: 2;
 			/*height: 100%;*/
-			/* TODO: to jest januszerka; 64px to wysokość headera; trzeba tu będzie też odjąć wysokość pola do pisania */
+			/* TODO: to jest januszerka; 64px to wysokość headera */
 			height: calc(100vh - 64px);
-			overflow-y: scroll;
+
+			display: flex;
+			flex-direction: column;
 		}
-		.threadArea .messages {
-			padding: 0 .6em
+		.threadArea .messageWindow {
+			flex: 1;
+		}
+		.threadArea .messageWindow .scrollableBody {
+			padding: .6em
 		}
 
 		.threadArea .info {
@@ -97,11 +103,19 @@
 		}
 
 		.scrollableArea {
-
-			/*overscroll-behavior: contain;*/
-			/*overflow-y: scroll;*/
+			overscroll-behavior: contain;
+			overflow-y: scroll;
 		}
 
+
+
+		/* pisanie wiadomości */
+		.messageEditor {
+			/*flex: 64px;*/
+			/*height: 64px;*/
+			padding: 20px;
+			background: #604;
+		}
 
 		/* profilowe */
 		img.smallThumbnail {
@@ -121,15 +135,27 @@
 			padding: 0;
 		}*/
 
-		.hideScrollBar {
+		* {
+			scrollbar-color: rgba(140, 140, 140, .5) transparent;
+			scrollbar-width: thin;
+		}
+
+		.autoHiddenScrollbar {
 			margin-right: -30px;
 			padding-right: 30px;
+			transition: .1s;
+		}
+
+		.autoHiddenScrollbar:hover {
+			margin-right: 0px;
+			padding-right: 0px;
 		}
 	</style>
 </head>
 <body>
 	<div class="mainMessengerElement">
 		<section class="threadList mainSection">
+			<!-- TODO: żeby tu dodać autoHiddenScrollbar, trzeba najpierw stworzyć osobny element; inaczej border section wychodzi w prawo -->
 			<header>Lista rozmów</header>
 			<nav>
 				<thread-list-element data='{"name":"Rafał Pokrywka","picture":"gfx/astronaut.svg","snippet":"Ty: lol xD", "utime":1564852492.264}'></thread-list-element>
@@ -142,8 +168,8 @@
 			<header class="threadHeader">Nazwa rozmowy</header>
 			<section>
 				<div class="threadContent">
-					<!-- <div class="messages scrollableArea"> -->
-						<!-- <div class="scrollableBody"> -->
+					<div class="messageWindow scrollableArea autoHiddenScrollbar">
+						<div class="scrollableBody">
 							<div class="chatMessage ownMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 1</div></div>
 							<div class="chatMessage alienMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 2</div></div>
 							<div class="chatMessage ownMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 3</div></div>
@@ -162,11 +188,11 @@
 							<div class="chatMessage alienMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 4</div></div>
 							<div class="chatMessage ownMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 5</div></div>
 							<div class="chatMessage alienMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 6</div></div>
-						<!-- </div> -->
-					<!-- </div> -->
-<!-- 					<div>
+						</div>
+					</div>
+					<div class="messageEditor">
 						Tu będzie się pisało wiadomości
-					</div> -->
+					</div>
 				</div>
 				<div class="info mainSection">Informacje o rozmowie</div>
 			</section>
