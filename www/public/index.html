@@ -2,53 +2,25 @@
 <html>
 <head>
 	<meta charset="utf-8">
+	<!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+	<meta name="theme-color" content="#1e1e1e">
 	<title>Strona główna | Offchan messenger</title>
-	<style type="text/css">
-		body {
-			margin: 0;
-			/*font-family: "Comic Sans MS";*/
-			font-family: "Segoe Script";
-			/*font-family: "Segoe UI";*/
-			background-color: #101010;
-
-			display: flex;
-			flex-direction: row;
-			width: 100%;
-			height: 100vh;
-			align-items: center;
-			justify-content: center;
-		}
-		.loginBox {
-			display: flex;
-			flex-direction: column;
-			color: #CECECE;
-			text-align: center;
-		}
-		.loginBox input, .loginBox span {
-			margin: 0.5em;
-			font-size: 2em;
-			color: #CECECE;
-		}
-		.loginBox input {
-			background-color: rgba(255, 255, 255, .05);
-			border-radius: 18px;
-			padding: 4px 8px 4px 12px;
-			border: none;
-		}
-	</style>
+	<link rel="stylesheet" type="text/css" href="css/login.css">
 </head>
 <body>
-	<form class="loginBox" id="loginForm" action="?" method="post">
-		<span>Logowanie</span>
-		<input type="text" name="login" placeholder="Login" autofocus>
-		<input type="password" name="password" placeholder="Hasło">
-	</form>
-	<form class="loginBox" id="registerForm" action="?" method="post">
-		<span>Rejestracja</span>
-		<input type="text" name="login" placeholder="Login">
-		<input type="password" name="password" placeholder="Hasło">
-		<input type="text" name="realName" placeholder="Imię i nazwisko">
-	</form>
+	<section class="loginPage">
+		<form class="loginBox" id="loginForm">
+			<span>Logowanie</span>
+			<input type="text" name="login" placeholder="Login" autofocus>
+			<input type="password" name="password" placeholder="Hasło">
+		</form>
+		<form class="loginBox" id="registerForm">
+			<span>Rejestracja</span>
+			<input type="text" name="login" placeholder="Login">
+			<input type="password" name="password" placeholder="Hasło">
+			<input type="text" name="realName" placeholder="Imię i nazwisko">
+		</form>
+	</section>
 	<script src="js/register.js"></script>
 </body>
 </html>
