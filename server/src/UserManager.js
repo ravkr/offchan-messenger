@@ -3,13 +3,13 @@ const mysql = require("mysql2");
 const ipaddr = require("ipaddr.js");
 const settings = require("../settings.js");
 
-const connection = mysql.createConnection(settings.databaseCredentials);
+const connectionPool = mysql.createPool(settings.databaseCredentials);
 
 async function loginAccount(login, password, sessionID, IPAddress) {
     // TODO: zapisywanie prób logowania
     console.log("LOGOWANIE", login, password, sessionID, IPAddress);
 
-    let [result, fields] = await connection.promise().execute(
+    let [result, fields] = await connectionPool.promise().execute(
         "SELECT `id`,`login`,`password`,`realName` FROM `offchan`.`users` WHERE `login` = ?", [login]);
     // TODO: throw w execute wywala aż pora loginAccount?
 
@@ -38,7 +38,7 @@ async function loginAccount(login, password, sessionID, IPAddress) {
     }
 
     try {
-        let [result2] = await connection.promise().execute(
+        let [result2] = await connectionPool.promise().execute(
             "INSERT INTO `offchan`.`sessions` (`sessionID`, `userID`) VALUES (?, ?)", [sessionID, result[0].id]);
     } catch (error) {
         if (error.code === "ER_DUP_ENTRY") {
@@ -78,7 +78,7 @@ async function registerAccount(login, password, realName, IPAddress) {
     // console.log("hashedPassword", hashedPassword);
 
     return await new Promise((resolve, reject) => {
-        connection.execute(
+        connectionPool.execute(
             "INSERT INTO `offchan`.`users` (`login`, `password`, `realName`, `registrationIP`) VALUES (?, ?, ?, ?)",
             [login, hashedPassword, realName, IPAddressBuffer],
             (error, result) => {
