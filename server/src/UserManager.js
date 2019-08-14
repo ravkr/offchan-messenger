@@ -14,7 +14,6 @@ async function loginAccount(login, password, sessionID, IPAddress) {
     // TODO: throw w execute wywala aż pora loginAccount?
 
     if (result.length === 0) {
-        console.log("result:", result);
         return {
             error: true,
             result: "ACCOUNT_DOES_NOT_EXIST",
@@ -64,7 +63,7 @@ async function loginAccount(login, password, sessionID, IPAddress) {
 }
 
 async function registerAccount(login, password, realName, IPAddress) {
-    // TODO: przepisać tę funkcję używając .promise()
+    // TODO: rate limiting
 
     // TODO: zrobić z tego osobną funkcję, przyda się do innych rzeczy
     let address = ipaddr.parse(IPAddress);
@@ -77,37 +76,34 @@ async function registerAccount(login, password, realName, IPAddress) {
     let hashedPassword = await bcrypt.hash(password, settings.BCRYPT_ROUNDS);
     // console.log("hashedPassword", hashedPassword);
 
-    return await new Promise((resolve, reject) => {
-        connectionPool.execute(
+    try {
+        let [result] = await connectionPool.promise().execute(
             "INSERT INTO `offchan`.`users` (`login`, `password`, `realName`, `registrationIP`) VALUES (?, ?, ?, ?)",
-            [login, hashedPassword, realName, IPAddressBuffer],
-            (error, result) => {
-                if (error) {
-                    if (error.code === "ER_DUP_ENTRY") {
-                        // TODO: uniwersalna klasa do "wyników" zapytań do bazy itp.
-                        return resolve({
-                            error: true,
-                            result: "LOGIN_NOT_AVAILABLE",
-                            message: "Ten login jest już zajęty"
-                        });
-                    }
-                    return reject(error);
-                }
-                console.log(result);
-                resolve({
-                    error: false,
-                    result: "SUCCESS",
-                    data: {
-                        userID: result.insertId
-                    }
-                });
-            }
+            [login, hashedPassword, realName, IPAddressBuffer]
         );
-    });
+
+        return {
+            error: false,
+            result: "SUCCESS",
+            data: {
+                userID: result.insertId
+            }
+        };
+    } catch (error) {
+        if (error.code === "ER_DUP_ENTRY") {
+            // TODO: uniwersalna klasa do "wyników" zapytań do bazy itp.
+            return {
+                error: true,
+                result: "LOGIN_NOT_AVAILABLE",
+                message: "Ten login jest już zajęty"
+            };
+        }
+        throw error;
+    }
 }
 
 function closeConnections() {
-    connection.end();
+    connectionPool.end();
 }
 
 module.exports = {
