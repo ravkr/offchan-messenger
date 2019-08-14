@@ -6,9 +6,10 @@
 	<meta name="theme-color" content="#1e1e1e">
 	<title>Strona główna | Offchan messenger</title>
 	<link rel="stylesheet" type="text/css" href="css/login.css">
+	<link rel="stylesheet" type="text/css" href="css/messages.css">
 </head>
 <body>
-	<section class="loginPage">
+	<section id="loginScreen" class="loginPage">
 		<form class="loginBox" id="loginForm">
 			<span>Logowanie</span>
 			<input type="text" name="login" placeholder="Login" autofocus>
@@ -21,6 +22,27 @@
 			<input type="text" name="realName" placeholder="Imię i nazwisko">
 		</form>
 	</section>
+	<section id="messengerScreen" class="mainMessengerElement" style="display: none;">
+		<section class="threadList mainSection">
+			<header>Lista rozmów</header>
+			<nav></nav>
+		</section>
+		<div class="threadArea mainSection">
+			<header class="threadHeader">Nazwa rozmowy</header>
+			<section>
+				<div class="threadContent">
+					<div class="messageWindow scrollableArea autoHiddenScrollbar">
+						<div class="scrollableBody"></div>
+					</div>
+					<div class="messageEditor">
+						<input type="text" name="messageEditor" value="Tu będzie się pisało wiadomości" size="80">
+					</div>
+				</div>
+				<div class="info mainSection">Informacje o rozmowie</div>
+			</section>
+		</div>
+	</section>
 	<script src="js/register.js"></script>
+	<script src="js/test.js"></script>
 </body>
 </html>

@@ -84,7 +84,7 @@ wss.on("headers", function connection(headers, request) {
 
     // TODO: na produkcji ma być dodatkowo "; Secure"
     // TODO: czas trwania sesji do ustawień
-    let cookie = `Set-Cookie: sid=${sessionID}; Max-Age=60; HttpOnly`;
+    let cookie = `Set-Cookie: sid=${sessionID}; Max-Age=600; HttpOnly`;
     headers.push(cookie);
 
     request.userData = {
@@ -93,8 +93,8 @@ wss.on("headers", function connection(headers, request) {
 });
 
 wss.on("connection", function connection(ws, request) {
-    console.log("sessionID:", request.userData.sessionID);
-    console.log((new Date()) + " Peer " + ws._socket.remoteAddress + " connected.");
+    let IPAddress = ws._socket.remoteAddress;
+    console.log(`[${Utils.getDateString()}] Websocket connection from ${IPAddress}; sessionID: ${request.userData.sessionID}`);
     // TODO: obsługa IP jeśli używamy reverse proxy
     // const ip = req.headers['x-forwarded-for'].split(/\s*,\s*/)[0];
 
@@ -111,15 +111,16 @@ wss.on("connection", function connection(ws, request) {
 
         switch (json.action) {
             case "login":
-                UserManager.loginAccount(json.login, json.password, request.userData.sessionID, ws._socket.remoteAddress).then((data)=> {
+                UserManager.loginAccount(json.login, json.password, request.userData.sessionID, IPAddress).then((data)=> {
                     console.log("login:", data);
+                    ws.send(JSON.stringify(data));
                 }).catch((err) => {
                     // TODO: obsługa błędów
                     console.log("login error!", err);
                 });
                 break;
             case "register":
-                UserManager.registerAccount(json.login, json.password, json.realName, ws._socket.remoteAddress).then((data)=> {
+                UserManager.registerAccount(json.login, json.password, json.realName, IPAddress).then((data)=> {
                     console.log("register:", data);
                 }).catch((err) => {
                     // TODO: obsługa błędów
