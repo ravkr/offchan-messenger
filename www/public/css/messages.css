@@ -16,6 +16,7 @@ body {
 
 .mainSection {
 	box-sizing: border-box;
+	position: relative;
 }
 
 .threadList {
