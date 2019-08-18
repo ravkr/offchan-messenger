@@ -43,10 +43,6 @@ body {
 
 .threadArea .threadContent {
 	flex: 2;
-	/*height: 100%;*/
-	/* TODO: to jest januszerka; 64px to wysokość headera */
-	height: calc(100vh - 64px);
-
 	display: flex;
 	flex-direction: column;
 }

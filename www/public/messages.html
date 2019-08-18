@@ -20,9 +20,9 @@
 			</nav>
 		</section>
 		<div class="threadArea mainSection">
-			<header class="threadHeader">Nazwa rozmowy</header>
+			<header id="threadHeader" class="threadHeader">Nazwa rozmowy</header>
 			<section>
-				<div class="threadContent">
+				<div id="threadContent" class="threadContent">
 					<div class="messageWindow scrollableArea autoHiddenScrollbar">
 						<div class="scrollableBody">
 							<div class="chatMessage ownMessage"><img class="smallThumbnail" src="gfx/astronaut.svg"><div class="chatMessageContent">Hej 1</div></div>
@@ -54,5 +54,20 @@
 		</div>
 	</section>
 	<script src="js/components/threadListElement.js"></script>
+	<script>
+		{
+			const getHeaderHeight = () => {
+				const threadHeader = document.querySelector('#threadHeader');
+				const headerHeight = threadHeader.getBoundingClientRect().height;
+				return headerHeight;
+			}
+			const updateThreadContentHeight = () => {
+				const headerHeight = getHeaderHeight();
+				const threadContent = document.querySelector('#threadContent');
+				threadContent.style.height = `calc(100vh - ${headerHeight}px)`;
+			}
+			updateThreadContentHeight();
+		}
+	</script>
 </body>
 </html>
