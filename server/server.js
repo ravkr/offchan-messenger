@@ -74,22 +74,25 @@ wss.on("headers", function connection(headers, request) {
     let oldCookies = Utils.parseCookie(request.headers["cookie"] || "");
     let base64Regex = /^(?:[A-Za-z0-9+/]{4})*(?:[A-Za-z0-9+/]{2}==|[A-Za-z0-9+/]{3}=)?$/;
 
-    let sessionID;
+    // TODO: może jakaś klasa do aktualnej sesji?
+    request.userData = {
+        state: "NOT_LOGGED_IN", // TODO: magic number
+    };
+
+    // let sessionID;
     if (base64Regex.test(oldCookies["sid"])) {
-        sessionID = oldCookies["sid"];
+        request.userData.sessionID = oldCookies["sid"];
+        request.userData.state = "REQUEST_SESSION_DATA"
     } else {
         // TODO: czy dodanie callbacku do generowania randomBytes jest możliwe? (obecnie jest to blokujące)
-        sessionID = crypto.randomBytes(18).toString("base64");
+        request.userData.sessionID = crypto.randomBytes(18).toString("base64");
     }
 
     // TODO: na produkcji ma być dodatkowo "; Secure"
     // TODO: czas trwania sesji do ustawień
-    let cookie = `Set-Cookie: sid=${sessionID}; Max-Age=600; HttpOnly`;
+    let cookie = `Set-Cookie: sid=${request.userData.sessionID}; Max-Age=600; HttpOnly`;
     headers.push(cookie);
 
-    request.userData = {
-        sessionID
-    };
 });
 
 wss.on("connection", function connection(ws, request) {
@@ -97,6 +100,27 @@ wss.on("connection", function connection(ws, request) {
     console.log(`[${Utils.getDateString()}] Websocket connection from ${IPAddress}; sessionID: ${request.userData.sessionID}`);
     // TODO: obsługa IP jeśli używamy reverse proxy
     // const ip = req.headers['x-forwarded-for'].split(/\s*,\s*/)[0];
+
+    if (request.userData.state === "REQUEST_SESSION_DATA") {
+        request.userData.state = "LOADING_SESSION_DATA";
+        UserManager.getSessionData(request.userData).then((data)=> {
+            request.userData = {
+                ...request.userData,
+                ...data
+            }
+
+            if (data.state === "LOGGED_IN") {
+                let obj = {
+                    type: "login",
+                    userID: data.userID
+                };
+                ws.send(JSON.stringify(obj));
+            }
+        }).catch((err) => {
+            // TODO: obsługa błędów
+            console.log("getSessionData error!", err);
+        });
+    }
 
     ws.on("message", function incoming(message) {
         let json;
@@ -128,7 +152,6 @@ wss.on("connection", function connection(ws, request) {
                 });
                 break;
         }
-
     });
 
     ws.on("close", () => {

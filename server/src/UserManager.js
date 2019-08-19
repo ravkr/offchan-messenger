@@ -102,6 +102,41 @@ async function registerAccount(login, password, realName, IPAddress) {
     }
 }
 
+async function getSessionData(userData, ws) {
+    try {
+        let [result, fields] = await connectionPool.promise().execute(
+            "SELECT `userID`,`lastActiveTimestamp` FROM `offchan`.`sessions` WHERE `sessionID` = ?",
+            [userData.sessionID]
+        );
+
+        if (result.length === 0) {
+            console.log(`Sesja ${userData.sessionID} nie istnieje.`)
+            return {
+                state: "NOT_LOGGED_IN"
+            };
+        }
+
+        console.log(result[0]);
+        let hours = (new Date() - result[0].lastActiveTimestamp)/1000/60/60
+        console.log("dni sesji: ", hours/24);
+        if (hours > 24) {
+            console.log(`Sesja ${userData.sessionID} wygasła. Do usunięcia.`)
+            // TODO: sesja wygasła - można usunąć z bazy? (lub przenieść do historii sesji)
+            return {
+                state: "NOT_LOGGED_IN"
+            };
+        }
+        // TODO: odświeżanie sesji
+
+        return {
+            userID: result[0].userID,
+            state: "LOGGED_IN",
+        };
+    } catch (error) {
+        throw error;
+    }
+}
+
 function closeConnections() {
     connectionPool.end();
 }
@@ -109,5 +144,6 @@ function closeConnections() {
 module.exports = {
     loginAccount,
     registerAccount,
+    getSessionData,
     closeConnections,
 };
