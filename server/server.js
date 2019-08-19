@@ -97,7 +97,7 @@ wss.on("headers", function connection(headers, request) {
 
 wss.on("connection", function connection(ws, request) {
     let IPAddress = ws._socket.remoteAddress;
-    console.log(`[${Utils.getDateString()}] Websocket connection from ${IPAddress}; sessionID: ${request.userData.sessionID}`);
+    console.log(`[${Utils.getDateString()}] Websocket connection; ${IPAddress}; sessionID: ${request.userData.sessionID}`);
     // TODO: obsługa IP jeśli używamy reverse proxy
     // const ip = req.headers['x-forwarded-for'].split(/\s*,\s*/)[0];
 
@@ -155,7 +155,7 @@ wss.on("connection", function connection(ws, request) {
     });
 
     ws.on("close", () => {
-        console.log("Client disconnected");
+        console.log(`[${Utils.getDateString()}] Websocket disconnected; IP: ${IPAddress}; sessionID: ${request.userData.sessionID}`);
     });
 });
 
