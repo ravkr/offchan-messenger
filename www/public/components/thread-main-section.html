@@ -1,0 +1,86 @@
+<template id="thread-main-section" class="threadArea">
+    <div class="threadArea mainSection">
+        <header id="threadHeader" class="threadHeader">
+            <slot name="header"></slot>
+        </header>
+        <section>
+            <div id="threadContent" class="threadContent">
+                <slot name="content"></slot>
+                <div class="messageEditor">
+                    <input type="text" name="messageEditor" value="Tu będzie się pisało wiadomości" size="80">
+                </div>
+            </div>
+            <div class="info mainSection">
+                <slot name="info"></slot>
+            </div>
+        </section>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: 'thread-main-section',
+        onMount(element) {
+            const template = element.shadowRoot;
+            const getHeaderHeight = () => {
+                const threadHeader = template.querySelector('#threadHeader');
+                const headerHeight = threadHeader.getBoundingClientRect().height;
+                return headerHeight;
+            };
+            const updateThreadContentHeight = () => {
+                const headerHeight = getHeaderHeight();
+                const threadContent = template.querySelector('#threadContent');
+                threadContent.style.height = `calc(100vh - ${headerHeight}px)`;
+            };
+            updateThreadContentHeight();
+        }
+    }
+</script>
+
+<style>
+    .threadHeader {
+        background: #410;
+        padding: 20px;
+        border-bottom: 1px solid #363636;
+    }
+
+    .threadContent {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .messageEditor {
+        padding: 20px;
+        background: #604;
+    }
+
+    .mainSection {
+        box-sizing: border-box;
+        position: relative;
+    }
+
+    .info {
+        background: #B05;
+        flex: 1;
+    }
+
+    .threadArea {
+        flex: 3;
+        display: flex;
+        flex-direction: column;
+    }
+
+    .threadArea>section {
+        flex: 1;
+        display: flex;
+    }
+
+    .threadArea .messageWindow {
+        flex: 1;
+    }
+
+    .threadArea .messageWindow .scrollableBody {
+        padding: .6em
+    }
+</style>
